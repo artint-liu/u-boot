@@ -7,6 +7,10 @@ int LCD_MOSI; // PE8
 int LCD_CS;   // PE7
 int LCD_BL;   // PE6
 
+// CONFIG_VIDEO_LCD_MODE
+// 参考参数: CONFIG_VIDEO_LCD_MODE="x:800,y:480,depth:18,pclk_khz:33000,le:87,ri:40,up:31,lo:13,hs:1,vs:1,sync:3,vmode:0"
+// 使用参数: CONFIG_VIDEO_LCD_MODE="x:480,y:480,depth:18,pclk_khz:10000,hs:38,vs:39,le:24,ri:6,up:16,lo:4,sync:3,vmode:0"
+
 #if 0
 #define SPI_MOSI(L)     gpio_direction_output(LCD_MOSI, L)
 #define SPI_MOSI_HIGH() SPI_MOSI(1)
