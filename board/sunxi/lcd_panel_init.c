@@ -29,7 +29,7 @@ int LCD_BL;   // PE6
 #define SPI_CS_LOW()    sunxi_gpio_output2(SUNXI_GPE(7), 0)
 #endif
 
-#define SPI_DELAY()       lcd_delay(1000)
+#define SPI_DELAY()       lcd_delay(10000)
 #define WRITE9BITCOMMAND  Write9BitsCommand
 #define WRITE9BITDATA     Write9BitsData
 
@@ -47,7 +47,7 @@ static int sunxi_gpio_output2(uint32_t pin, uint32_t val)
 
 	dat = readl(&pio->dat);
 	if (val)
-		dat |= 0x1 << num;
+		dat |= (0x1 << num);
 	else
 		dat &= ~(0x1 << num);
 
@@ -83,6 +83,7 @@ void Write9Bits(uint8_t d, uint8_t dc)
     SPI_DELAY();
 
     bit >>= 1;
+
     SPI_SCK_LOW();
     SPI_DELAY();
   }
@@ -100,8 +101,8 @@ void Write9BitsCommand(uint8_t c)
 
 int SPI_Init()
 {
-  int ret;
 #if 0
+  int ret;
   LCD_CLK = sunxi_name_to_gpio("PE9");
   if (LCD_CLK < 0) {
     printf("Error invalid LCD CLK pin: PE, err %d\n", LCD_CLK);
@@ -145,7 +146,7 @@ int SPI_Init()
     printf("Error requesting LCD_BL pin: PE, err %d\n", LCD_BL);
     return ret;
   }
-  #else
+#else
 
   sunxi_gpio_set_cfgpin(SUNXI_GPE(6), SUNXI_GPIO_OUTPUT);
   sunxi_gpio_set_cfgpin(SUNXI_GPE(7), SUNXI_GPIO_OUTPUT);
@@ -153,7 +154,9 @@ int SPI_Init()
   sunxi_gpio_set_cfgpin(SUNXI_GPE(9), SUNXI_GPIO_OUTPUT);
 
   sunxi_gpio_output2(SUNXI_GPE(6), 1);
-  #endif
+  
+  printf("Soft SPI Init OK\n");
+#endif
 
   return 0;
 }
@@ -161,7 +164,7 @@ int SPI_Init()
 void LCD_InitCommand()
 {
   WRITE9BITCOMMAND(0x01); // Reset
-  lcd_delay(1000);
+  lcd_delay(100000);
 
   WRITE9BITCOMMAND(0xff);
   WRITE9BITDATA(0x77);
@@ -375,6 +378,7 @@ void LCD_Init()
     SPI_CS_LOW();
     lcd_delay(100);
     LCD_InitCommand();
-    SPI_CS_HIGH();    
+    printf("Send LCD SPI command finished.\n");
+    SPI_CS_HIGH();
   }
 }
