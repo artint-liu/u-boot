@@ -9,6 +9,7 @@
 # SPDX-License-Identifier:	GPL-2.0+
 #
 obj-y	+= board.o
+obj-y	+= lcd_panel_init.o
 obj-$(CONFIG_SUN7I_GMAC)	+= gmac.o
 ifndef CONFIG_SPL_BUILD
 obj-$(CONFIG_SUNXI_AHCI)	+= ahci.o

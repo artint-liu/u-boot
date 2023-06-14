@@ -176,6 +176,7 @@ void i2c_init_board(void)
 /* add board specific code here */
 int board_init(void)
 {
+	printf("board_init\n");
 	__maybe_unused int id_pfr1, ret, satapwr_pin, macpwr_pin;
 
 	gd->bd->bi_boot_params = (PHYS_SDRAM_0 + 0x100);
@@ -233,7 +234,8 @@ int board_init(void)
 	 */
 	i2c_init_board();
 #endif
-
+	printf("Call LCD_Init()\n");
+	LCD_Init();
 	/* Uses dm gpio code so do this here and not in i2c_init_board() */
 	return soft_i2c_board_init();
 }
