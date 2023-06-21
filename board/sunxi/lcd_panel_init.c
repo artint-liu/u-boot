@@ -60,7 +60,7 @@ static int sunxi_gpio_output2(uint32_t pin, uint32_t val)
 void Write9Bits(uint8_t d, uint8_t dc)
 {
   // dc ? SPI_MOSI_HIGH() : SPI_MOSI_LOW();
-  SPI_MOSI(1);
+  SPI_MOSI(dc);
 
   SPI_SCK_HIGH();
   SPI_DELAY();
