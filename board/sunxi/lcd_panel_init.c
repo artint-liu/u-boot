@@ -29,15 +29,15 @@ int LCD_BL;   // PE6
 #define SPI_CS_LOW()    sunxi_gpio_output2(SUNXI_GPE(7), 0)
 #endif
 
-#define SPI_DELAY()       lcd_delay(10000)
+#define SPI_DELAY()       lcd_delay(100)
 #define WRITE9BITCOMMAND  Write9BitsCommand
 #define WRITE9BITDATA     Write9BitsData
 
 void lcd_delay(int delay)
 {
-  //udelay(delay * 1000);
-  delay *= 1000;
-  while(--delay);
+  udelay(delay);
+  //delay *= 1000;
+  //while(--delay);
 }
 
 static int sunxi_gpio_output2(uint32_t pin, uint32_t val)
@@ -169,7 +169,7 @@ void LCD_InitCommand()
 	WRITE9BITCOMMAND(0x1);
 	SPI_CS_HIGH();
 
-	lcd_delay(232);
+	lcd_delay(120 * 1000);
 
 	// batchOperation2
 
@@ -376,7 +376,7 @@ void LCD_InitCommand()
 	WRITE9BITCOMMAND(0x11);
 	SPI_CS_HIGH();
 
-	lcd_delay(120);
+	lcd_delay(120 * 1000);
 
 	SPI_CS_LOW();
 	WRITE9BITCOMMAND(0x29);
